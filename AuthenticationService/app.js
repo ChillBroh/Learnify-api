@@ -1,12 +1,22 @@
 const express = require("express")
-const cors = require("cors")
-
 const app = express()
+const appRouter = express.Router()
+const cors = require("cors")
+const connectDB = require('./config/database')
+//Requires - Route classes 
+const authRoutes = require('./src/routes/authRoutes')
+
+connectDB.getInstance()
+
 
 app.use(cors())
-app.use(express.json())
 
-//Add routes here
+app.use(express.json())
+app.use('/', appRouter)
+
+app.use('/server', authRoutes)
+
+
 
 //Exporting app to be used by the server.js
 module.exports = app
