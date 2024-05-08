@@ -1,5 +1,8 @@
 const express = require("express")
 const cors = require("cors")
+const connectDB = require('./config/database')
+
+connectDB.getInstance()
 
 const app = express()
 

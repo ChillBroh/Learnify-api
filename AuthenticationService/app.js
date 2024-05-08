@@ -3,6 +3,7 @@ const app = express()
 const appRouter = express.Router()
 const cors = require("cors")
 const connectDB = require('./config/database')
+
 //Requires - Route classes 
 const authRoutes = require('./src/routes/authRoutes')
 
