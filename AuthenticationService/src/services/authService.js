@@ -25,7 +25,10 @@ exports.register = async (req, res) => {
   //Constructing the new user payload
   const newUser = {
     userName: payload.userName,
+    email: payload.email,
+    image: payload.image,
     password: hashedPassword,
+    mobileNo: payload.mobileNo,
     userRole: payload.userRole,
   };
 
@@ -49,6 +52,7 @@ exports.login = async (req, res) => {
 
   if (foundUser.status === HttpStatus.OK) {
     const retrivedUser = foundUser.body;
+    console.log("user is ", retrivedUser);
 
     if (retrivedUser) {
       //Once the user is found in the system check for password matching to validate the user
@@ -63,12 +67,14 @@ exports.login = async (req, res) => {
         const accessToken = getAccessToken(
           retrivedUser._id,
           retrivedUser.userRole,
-          retrivedUser.userName
+          retrivedUser.userName,
+          retrivedUser.image
         );
         const refreshToken = getRefreshToken(
           retrivedUser._id,
           retrivedUser.userRole,
-          retrivedUser.userName
+          retrivedUser.userName,
+          retrivedUser.image
         );
 
         //Setting the response header with OK and dispatching the JWT Tokens in a JSON body
