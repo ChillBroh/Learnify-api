@@ -47,6 +47,14 @@ const getAllCourses = catchAsync(async (req, res, next) => {
   });
 });
 
+const getCoursesByUser = catchAsync(async (req, res, next) => {
+  const courses = await Course.find({ createdBy: req.user.userId });
+  res.status(200).json({
+    status: "success",
+    data: courses,
+  });
+});
+
 const getOneCourse = catchAsync(async (req, res, next) => {
   const courseId = req.params.id;
   const course = await Course.findOne({ _id: courseId });
@@ -99,4 +107,5 @@ module.exports = {
   updateCourse,
   deleteCourse,
   getOneCourse,
+  getCoursesByUser,
 };
