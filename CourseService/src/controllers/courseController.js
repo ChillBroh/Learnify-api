@@ -3,49 +3,44 @@ const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
 
 const createCourse = catchAsync(async (req, res, next) => {
-  const { courseCode, courseName, description, credits, department, faculty } =
-    req.body;
-  const existingCourse = await Course.findOne({ courseCode });
+  const {
+    title,
+    description,
+    instructor,
+    duration,
+    coverImage,
+    price,
+    tags,
+    lessons,
+  } = req.body;
+
+  const existingCourse = await Course.findOne({ title: title });
   if (existingCourse) {
     return next(new AppError("Course already exists!", 400));
   }
-  const facultyIds = [];
-  for (const fac of faculty) {
-    const user = await User.findOne({ _id: fac });
-
-    if (user && user.role == "Faculty") {
-      facultyIds.push(user._id);
-    } else {
-      return next(
-        new AppError(`${fac} is neither a staff member nor a registered user!`)
-      );
-    }
-  }
 
   const newCourse = new Course({
-    courseCode,
-    courseName,
+    title,
     description,
-    credits,
-    department,
-    createdBy: req.user.email,
-    faculty,
+    instructor,
+    duration,
+    coverImage,
+    price,
+    tags,
+    createdBy: req.user.userId,
+    createdAt: new Date(),
+    lessons,
   });
 
   const savedCourse = await newCourse.save();
   res.status(201).json({
     data: savedCourse,
-    Message: "Course Created",
+    message: "Course Created",
   });
 });
 
 const getAllCourses = catchAsync(async (req, res, next) => {
-  let respond = new Filter(Course.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
-  const courses = await respond.query;
+  const courses = await Course.find();
   res.status(200).json({
     status: "success",
     data: courses,
@@ -54,7 +49,7 @@ const getAllCourses = catchAsync(async (req, res, next) => {
 
 const getOneCourse = catchAsync(async (req, res, next) => {
   const courseId = req.params.id;
-  const course = await Course.findOne({ courseCode: courseId });
+  const course = await Course.findOne({ _id: courseId });
 
   if (!course) {
     return next(new AppError("Course Not Found!", 404));
@@ -67,25 +62,12 @@ const getOneCourse = catchAsync(async (req, res, next) => {
 
 const updateCourse = catchAsync(async (req, res, next) => {
   const courseId = req.params.id;
+  console.log(courseId);
   const updatedDetails = req.body;
-
-  if (updatedDetails.faculty) {
-    for (const fac of updatedDetails.faculty) {
-      const user = await User.findOne({ _id: fac });
-      console.log(fac);
-
-      if (!user || user.role != "Faculty") {
-        return next(
-          new AppError(
-            `${fac} is neither a staff member nor a registered user!`
-          )
-        );
-      }
-    }
-  }
+  console.log(updatedDetails);
 
   const course = await Course.findOneAndUpdate(
-    { courseCode: courseId }, // Filter criteria
+    { _id: courseId }, // Filter criteria
     { $set: updatedDetails }, // Update data using $set operator
     { new: true } // Return the updated document
   );
@@ -103,7 +85,7 @@ const updateCourse = catchAsync(async (req, res, next) => {
 
 const deleteCourse = catchAsync(async (req, res, next) => {
   const courseId = req.params.id;
-  const course = await Course.findOneAndDelete({ courseCode: courseId });
+  const course = await Course.findOneAndDelete({ _id: courseId });
 
   if (!course) {
     return next(new AppError("Course Not Found!", 404));

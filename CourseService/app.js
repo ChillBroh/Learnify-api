@@ -3,9 +3,10 @@ const cors = require("cors");
 const AppError = require("./src/utils/AppError");
 const errorHandler = require("./src/middlewares/errorHandler");
 const courseRoutes = require("./src/routes/courseRoutes");
+const connectDB = require("./config/database");
 
 const app = express();
-
+connectDB.getInstance();
 app.use(cors());
 app.use(express.json());
 

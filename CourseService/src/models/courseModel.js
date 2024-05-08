@@ -33,7 +33,7 @@ const lessonSchema = new mongoose.Schema({
   videoUrl: {
     type: String,
   },
-  quiz: quizSchema,
+  quiz: [quizSchema],
 });
 
 // Schema for courses
@@ -55,13 +55,27 @@ const courseSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    coverImage: {
+      type: String,
+      required: true,
+    },
     price: {
       type: Number,
       required: true,
     },
     tags: {
       type: [String],
+      required: true,
     },
+    createdBy: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+
     lessons: [lessonSchema],
   },
   { collection: "courses" }

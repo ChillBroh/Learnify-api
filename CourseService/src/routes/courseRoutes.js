@@ -18,6 +18,6 @@ router
   .route("/:id")
   .patch(authController.restrictTo("instructor"), updateCourse)
   .delete(authController.restrictTo("instructor"), deleteCourse)
-  .get(authController.protect, getOneCourse);
+  .get(getOneCourse);
 
 module.exports = router;
