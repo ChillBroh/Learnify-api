@@ -17,7 +17,7 @@ app.use(
 );
 app.use("/api/guest/course", applyRateLimiter, proxy("http://localhost:8002"));
 app.use(
-  "/api/enrollment",
+  "/api/learner",
   applyRateLimiter,
   authenticateRequest,
   proxy("http://localhost:8003")

@@ -121,7 +121,7 @@ const getCourseByApproval = catchAsync(async(req,res,next) => {
   if (!coursesList) {
     return next(new AppError("No pending courses!", 404));
   }
-  res.status(201).json(coursesList).end();
+  res.status(201).json(coursesList);
 })
 
 module.exports = {
