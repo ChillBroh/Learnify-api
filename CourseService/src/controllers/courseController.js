@@ -101,6 +101,18 @@ const deleteCourse = catchAsync(async (req, res, next) => {
   res.status(204).end();
 });
 
+const approveCourse = catchAsync(async(req,res,next) => {
+  const courseId = req.params.id
+  const updateBody = {
+    authorized: req.body.authorized
+  }
+  const response = await Course.findByIdAndUpdate(courseId, updateBody)
+  if (!response) {
+    return next(new AppError("Course Not Approved correctly!", 500));
+  }
+  res.status(201).end();
+})
+
 module.exports = {
   createCourse,
   getAllCourses,
@@ -108,4 +120,5 @@ module.exports = {
   deleteCourse,
   getOneCourse,
   getCoursesByUser,
+  approveCourse,
 };
