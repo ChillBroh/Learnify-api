@@ -18,7 +18,7 @@ exports.getUserByName = async (Name) => {
 //Not working yet - ToBe Fixed
 exports.saveUserPreferences = async (username, payload) => {
     try {
-        
+
         const response = await userBaseModel.findOneAndUpdate(
             { userName: username },
             payload,
@@ -37,7 +37,16 @@ exports.deleteUser = async (userName) => {
         const response = await userBaseModel.findOneAndDelete({ userName: userName })
         return { status: HTTPStatus.OK, body: response }
     } catch (error) {
-        console.log("An error occured at deleteUser" + error)
+
+        return { status: HTTPStatus.INTERNAL_SERVER_ERROR, body: error }
+    }
+}
+
+exports.getUsersByType = async (userType) => {
+    try {
+        const response = await userBaseModel.find({ userRole: userType })
+        return { status: HTTPStatus.OK, body: response }
+    } catch (error) {
         return { status: HTTPStatus.INTERNAL_SERVER_ERROR, body: error }
     }
 }
