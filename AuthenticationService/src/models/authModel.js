@@ -23,6 +23,7 @@ const authSchema = new mongoose.Schema(
       enum: Object.values(UserRole),
       default: "learner",
     }, //Roles : learner, instructor, admin
+    userInterests: { type: [String], required: false }
   },
   { collection: "authUsers" }
 );
