@@ -101,6 +101,29 @@ const deleteCourse = catchAsync(async (req, res, next) => {
   res.status(204).end();
 });
 
+const approveCourse = catchAsync(async(req,res,next) => {
+  const courseId = req.params.id
+  const updateBody = {
+    authorized: req.body.authorized
+  }
+  const response = await Course.findByIdAndUpdate(courseId, updateBody)
+  if (!response) {
+    return next(new AppError("Course Not Approved correctly!", 500));
+  }
+  res.status(201).end();
+})
+
+const getCourseByApproval = catchAsync(async(req,res,next) => {
+
+  const approvedState = req.params.id
+  const coursesList = await Course.find({authorized: approvedState})
+
+  if (!coursesList) {
+    return next(new AppError("No pending courses!", 404));
+  }
+  res.status(201).json(coursesList).end();
+})
+
 module.exports = {
   createCourse,
   getAllCourses,
@@ -108,4 +131,6 @@ module.exports = {
   deleteCourse,
   getOneCourse,
   getCoursesByUser,
+  approveCourse,
+  getCourseByApproval,
 };

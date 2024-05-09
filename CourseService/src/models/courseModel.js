@@ -87,6 +87,10 @@ const courseSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    authorized: {
+      type:Boolean,
+      default:false
+    },
 
     lessons: [lessonSchema],
   },

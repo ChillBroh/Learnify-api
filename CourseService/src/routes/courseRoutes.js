@@ -5,6 +5,9 @@ const {
   updateCourse,
   deleteCourse,
   getCoursesByUser,
+  approveCourse,
+  getCourseByApproval,
+
 } = require("../controllers/courseController");
 const authController = require("../controllers/authController");
 
@@ -19,4 +22,9 @@ router
   .route("/course/user")
   .get(authController.restrictTo("instructor"), getCoursesByUser);
 
+router
+  .route("/course/:id")
+  .patch(authController.restrictTo("admin"), approveCourse)
+  .get(authController.restrictTo("admin"), getCourseByApproval)
+  
 module.exports = router;
