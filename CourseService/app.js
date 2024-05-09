@@ -5,6 +5,7 @@ const errorHandler = require("./src/middlewares/errorHandler");
 const courseRoutes = require("./src/routes/courseRoutes");
 const connectDB = require("./config/database");
 const guestRoutes = require("./src/routes/guestRoutes");
+const enrollRoutes = require("./src/routes/enrollmentRoutes");
 
 const app = express();
 connectDB.getInstance();
@@ -13,6 +14,7 @@ app.use(express.json());
 
 //Add routes here
 app.use("/", courseRoutes);
+app.use("/enroll", enrollRoutes);
 app.use("/guest-routes", guestRoutes);
 
 app.use(errorHandler);
