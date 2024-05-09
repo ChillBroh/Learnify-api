@@ -26,6 +26,7 @@ exports.verifyToken = async (req) => {
     const userData = {
       userId: decoded.userId,
       userType: decoded.userType,
+      userName: decoded.userName
     };
 
     return { status: HttpStatus.OK, body: userData };
@@ -88,3 +89,4 @@ exports.getRefreshToken = (userId, userRole, userName, image) => {
 
   return refreshToken;
 };
+

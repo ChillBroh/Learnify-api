@@ -1,4 +1,7 @@
 const {createUser} = require('../controllers/adminController')
+const bcryptjs = require("bcryptjs");
+const saltCount = 10;
+
 
 const hashPasswordGen = async (plainPsw) => {
     const hashPsw = await bcryptjs.hash(plainPsw, saltCount);

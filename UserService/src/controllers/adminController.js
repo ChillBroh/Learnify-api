@@ -1,4 +1,5 @@
-const learnerBaseModel = require("../models/learnerBaseModel");
+const learnerBaseModel = require("../models/userModel");
+const HttpStatus = require("../enums/httpStatus");
 
 exports.createUser = async (userData) => {
     try {

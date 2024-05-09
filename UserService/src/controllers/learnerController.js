@@ -1,6 +1,6 @@
-const learnerBaseModel = require("../models/learnerBaseModel")
+const learnerBaseModel = require("../models/userModel")
 const HTTPStatus = require('../enums/httpStatus')
-const learnerExtendedModel = require("../models/learnerExtendedModel")
+const learnerExtendedModel = require("../models/userExtendedModel")
 
 
 exports.getUserByName = async(Name) => {
