@@ -1,16 +1,16 @@
 /**
- * @description - This file defines the base learner model for mongoDB
+ * @description - This file defines the base user model for mongoDB
  */
 
 const mongoose = require('mongoose')
 
 const UserRole = {
-    LEARNER: "learner",
+    user: "user",
     INSTRUCTOR: "instructor",
     ADMIN: "admin",
   }
 
-const learnerBaseSchema = new mongoose.Schema({
+const userBaseSchema = new mongoose.Schema({
     userName: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     image: { type: String, required: false },
@@ -22,10 +22,11 @@ const learnerBaseSchema = new mongoose.Schema({
       enum: Object.values(UserRole),
       default: "learner",
     }, //Roles : learner, instructor, admin
-  }, { collection: 'authUsers',discriminatorKey: 'learner' })
+    userInterests: { type: [String], required: false }
+  }, { collection: 'authUsers'})
 
 //Creating mongoose model using Schema
-const learnerBaseModel = mongoose.model('learnerBaseModel', learnerBaseSchema)
+const userBaseModel = mongoose.model('userBaseModel', userBaseSchema)
 
-//Exporting model to be used by learnerController.js
-module.exports = learnerBaseModel
+//Exporting model to be used by userController.js
+module.exports = userBaseModel

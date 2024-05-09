@@ -1,10 +1,10 @@
 const { saveUserPreferences, deleteUser } = require('../controllers/learnerController')
 
 
-exports.addPreferences = async(req,res) => {
+exports.updateUser = async(req,res) => {
 
     
-    const payload = req.body.userInterests
+    const payload = req.body
     const userName = req.body.userName
 
     const response = await saveUserPreferences(userName,payload)

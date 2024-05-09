@@ -5,11 +5,11 @@
 //Requires
 const express = require('express')
 const router = express.Router()
-const { addPreferences, deleteLearner } = require('../services/learnerService')
+const { updateUser, deleteLearner } = require('../services/learnerService')
 
 //Save preferences
-router.post('/', async(req,res) => {
-    await addPreferences(req,res)
+router.patch('/', async(req,res) => {
+    await updateUser(req,res)
 })
 
 //Delete learner
