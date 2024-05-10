@@ -6,6 +6,7 @@ const {
   getEnrollmentById,
   updateEnrollmentById,
   deleteEnrollmentById,
+  getAllEnrollmentsByInstructor,
 } = require("../controllers/enrollmentController");
 const authController = require("../controllers/authController");
 
@@ -18,4 +19,5 @@ router
   .get(getEnrollmentById)
   .patch(authController.restrictTo("learner"), updateEnrollmentById)
   .delete(authController.restrictTo("learner"), deleteEnrollmentById);
+
 module.exports = router;

@@ -11,6 +11,10 @@ const enrollmentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    instructorId: {
+      type: String,
+      required: true,
+    },
     learnerId: {
       type: String,
       required: true,
