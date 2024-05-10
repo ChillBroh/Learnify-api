@@ -50,3 +50,12 @@ exports.getUsersByType = async (userType) => {
         return { status: HTTPStatus.INTERNAL_SERVER_ERROR, body: error }
     }
 }
+
+exports.getUser = async(userId) => {
+    try {
+        const response = await userBaseModel.findById(userId)
+        return { status: HTTPStatus.OK, body: response }
+    } catch (error) {
+        return { status: HTTPStatus.INTERNAL_SERVER_ERROR, body: error }
+    }
+}
