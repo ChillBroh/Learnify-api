@@ -3,21 +3,18 @@
  */
 
 //Imports and Requires
-const http = require('http')
-const app = require('./app')
+const http = require("http");
+const app = require("./app");
 
-require('dotenv').config()
+require("dotenv").config();
 
-console.log( 'Server Js executing... Initiating HTTP server')
-const port = process.env.PORT
-
+console.log("Server Js executing... Initiating HTTP server");
+const port = process.env.PORT;
 
 //Creates HTTP server
-const server = http.createServer(app)
+const server = http.createServer(app);
 
 //Server then  listen to the port (4000)
-server.listen(port, () => {
-   
-    console.log(`Authentication Server is running on port ${port}`)
-
-})
+server.listen(8001, () => {
+  console.log(`Authentication Server is running on port ${port}`);
+});
