@@ -1,4 +1,4 @@
-const { saveUserPreferences, deleteUser, getUsersByType } = require('../controllers/commonController')
+const { saveUserPreferences, deleteUser, getUsersByType, getUser } = require('../controllers/commonController')
 
 
 exports.updateUser = async(req,res) => {
@@ -25,6 +25,14 @@ exports.getAllUserByType = async(req,res) => {
     const userType = req.params.id
 
     const response = await getUsersByType(userType)
+
+    res.status(response.status).json(response.body)
+}
+
+exports.getUserById = async(req,res) => {
+    const userId = req.params.id
+
+    const response = await getUser(userId)
 
     res.status(response.status).json(response.body)
 }

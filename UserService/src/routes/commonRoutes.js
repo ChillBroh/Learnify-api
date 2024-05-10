@@ -5,10 +5,14 @@
 //Requires
 const express = require('express')
 const router = express.Router()
-const { updateUser, deleteUser, getAllUserByType } = require('../services/commonService')
+const { updateUser, deleteUser, getAllUserByType, getUserById } = require('../services/commonService')
 
 router.get('/:id', async (req, res) => {
   await getAllUserByType(req, res)
+})
+
+router.get('/user/:id', async(req,res) => {
+  await getUserById(req,res)
 })
 
 //Save preferences
