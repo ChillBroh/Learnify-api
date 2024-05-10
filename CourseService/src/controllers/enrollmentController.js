@@ -1,4 +1,5 @@
 const Enrollment = require("../models/enrollmentModel");
+const Course = require("../models/courseModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 
@@ -12,8 +13,14 @@ const createEnrollment = catchAsync(async (req, res, next) => {
     return next(new AppError("Already enrolled!", 400));
   }
 
+  const course = await Course.findOne({ _id: courseId });
+  if (!course) {
+    return next(new AppError("Course not found", 404));
+  }
+
   const newEnrollment = new Enrollment({
     courseId,
+    instructorId: course.createdBy,
     learnerId,
   });
 
@@ -27,6 +34,17 @@ const createEnrollment = catchAsync(async (req, res, next) => {
 // Get all enrollments
 const getAllEnrollments = catchAsync(async (req, res, next) => {
   const enrollments = await Enrollment.find();
+  res.status(200).json({
+    data: enrollments,
+  });
+});
+//get courses enrolled related to instructor
+const getAllEnrollmentsByInstructor = catchAsync(async (req, res, next) => {
+  const instructorId = req.user.userId;
+  console.log(req.user.userId);
+  console.log("hello");
+  const enrollments = await Enrollment.find({ instructorId: instructorId });
+  console.log(enrollments);
   res.status(200).json({
     data: enrollments,
   });
@@ -72,11 +90,12 @@ const updateEnrollmentById = catchAsync(async (req, res, next) => {
 const deleteEnrollmentById = catchAsync(async (req, res, next) => {
   const userId = req.user.userId;
   const courseId = req.params.id;
+  console.log(userId);
+  console.log(courseId);
   const enrollment = await Enrollment.findOne({
     courseId: courseId,
     learnerId: userId,
   });
-  console.log(enrollment);
   const deletedEnrollment = await Enrollment.findByIdAndDelete(enrollment._id);
   if (!deletedEnrollment) {
     return next(new AppError("Enrollment not found", 404));
@@ -93,4 +112,5 @@ module.exports = {
   getEnrollmentById,
   updateEnrollmentById,
   deleteEnrollmentById,
+  getAllEnrollmentsByInstructor,
 };
