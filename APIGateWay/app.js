@@ -8,6 +8,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/test", (req, res) => {
+  console.log("ava");
+  res.json({
+    message: "pako",
+  });
+});
+
 app.use("/api/auth", applyRateLimiter, proxy("http://localhost:8001"));
 app.use(
   "/api/course",
