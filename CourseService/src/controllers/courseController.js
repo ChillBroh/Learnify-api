@@ -118,7 +118,7 @@ const getCourseByApproval = catchAsync(async(req,res,next) => {
   const approvedState = req.params.id
   const coursesList = await Course.find({authorized: approvedState})
 
-  if (!coursesList) {
+  if (coursesList.length < 1) {
     return next(new AppError("No pending courses!", 404));
   }
   res.status(201).json(coursesList);
