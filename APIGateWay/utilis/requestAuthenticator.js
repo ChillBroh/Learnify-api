@@ -8,10 +8,13 @@ exports.authenticateRequest = async (req, res, next) => {
     return res.status(401).json({ error: "Missing token" });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+console.log(process.env.JWT_SECRET);
+  jwt.verify(token, 'DSJWTSECRET', (err, decoded) => {
     if (err) {
+      console.log(err.message)
       return res.status(403).json({ error: "Invalid token" });
     }
+    console.log(decoded)
     req.user = decoded;
     next();
   });
