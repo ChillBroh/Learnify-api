@@ -4,16 +4,9 @@ const proxy = require("express-http-proxy");
 const { applyRateLimiter } = require("./utilis/rateLimiter");
 const { authenticateRequest } = require("./utilis/requestAuthenticator");
 const app = express();
-
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/test", (req, res) => {
-  console.log("ava");
-  res.json({
-    message: "pako",
-  });
-});
 
 app.use("/api/auth", applyRateLimiter, proxy("host.docker.internal:8001"));
 app.use(
@@ -52,9 +45,7 @@ app.use(
   proxy("host.docker.internal:8006")
 );
 
-app.listen(8000, () => {
-  console.log("Gateway is Listening to Port 8000");
-});
+
 
 //Exporting app to be used by the server.js
 module.exports = app;
