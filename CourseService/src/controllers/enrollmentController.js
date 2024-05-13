@@ -2,6 +2,7 @@ const Enrollment = require("../models/enrollmentModel");
 const Course = require("../models/courseModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
+const axios = require("axios");
 
 // Create a new enrollment
 const createEnrollment = catchAsync(async (req, res, next) => {
@@ -21,10 +22,22 @@ const createEnrollment = catchAsync(async (req, res, next) => {
     courseId,
     instructorId: course.createdBy,
     learnerId: userId,
-    paymentStatus: true,
+    paymentStatus: false,
   });
 
   const savedEnrollment = await newEnrollment.save();
+  if (savedEnrollment) {
+    const userResponse = await axios.get(
+      `http://localhost:8006/common/user/${userId}`
+    );
+    const email = userResponse.data.email;
+    const response = await axios.post("http://localhost:8004/send-email", {
+      email: email,
+      subject: `Course Enrollment - ${course.title}`,
+      text: `Congratulations! You have successfully Enrolled to ${course.title}! You will received a payment Confirmation Message shortly.`,
+    });
+  }
+
   res.status(201).json({
     data: savedEnrollment,
     message: "Enrolled",
