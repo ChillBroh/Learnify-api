@@ -15,8 +15,8 @@ router
   .post(createEnrollment)
   .get(authController.restrictTo("admin", "instructor"), getAllEnrollments);
 router
-  .route("/:id/userId")
-  .get(getEnrollmentById)
+  .route("/:id")
+  .get(authController.restrictTo("learner"), getEnrollmentById)
   .patch(authController.restrictTo("learner"), updateEnrollmentById)
   .delete(authController.restrictTo("learner"), deleteEnrollmentById);
 

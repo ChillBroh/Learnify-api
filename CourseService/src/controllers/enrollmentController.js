@@ -22,7 +22,7 @@ const createEnrollment = catchAsync(async (req, res, next) => {
     courseId,
     instructorId: course.createdBy,
     learnerId: userId,
-    paymentStatus: false,
+    paymentStatus: true,
   });
 
   const savedEnrollment = await newEnrollment.save();

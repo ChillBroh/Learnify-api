@@ -1,6 +1,8 @@
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_KEY);
 const axios = require("axios");
+const express = require("express");
+const app = express();
 require("dotenv").config();
 
 const CreateCheckout = async (req, res) => {
@@ -36,4 +38,33 @@ const CreateCheckout = async (req, res) => {
   }
 };
 
-module.exports = { CreateCheckout };
+const WebhookEvent = async (req, res) => {
+  const payload = req.body;
+
+  try {
+    // Verify the event by fetching it from Stripe
+    const event = await stripe.webhooks.constructEvent(
+      req.rawBody, // You can use rawBody if using express-rawbody middleware
+      req.headers["stripe-signature"],
+      "your_webhook_secret_key"
+    );
+
+    // Handle the event based on its type
+    switch (event.type) {
+      case "checkout.session.completed":
+        const session = event.data.object;
+        // Do something with the session data (e.g., save payment details to your database)
+        console.log("Payment successful:", session);
+        break;
+      default:
+        console.log(`Unhandled event type: ${event.type}`);
+    }
+
+    res.json({ received: true });
+  } catch (err) {
+    console.error("Error handling webhook:", err.message);
+    res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+};
+
+module.exports = { CreateCheckout, WebhookEvent };
