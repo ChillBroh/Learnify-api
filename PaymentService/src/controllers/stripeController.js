@@ -7,19 +7,20 @@ const CreateCheckout = async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
-      line_items: req.body.items.map((item) => {
-        return {
+      line_items: [
+        {
           price_data: {
             currency: "usd",
             product_data: {
-              name: item.name,
+              name: req.body.name,
+              images: [req.body.image],
             },
-            unit_amount: item.price * 100,
+            unit_amount: req.body.price * 100,
           },
-          quantity: item.quantity,
-        };
-      }),
-      success_url: `${process.env.CLIENT_URL}`,
+          quantity: req.body.quantity,
+        },
+      ],
+      success_url: `${process.env.CLIENT_URL}course/detailed/${req.body.id}`,
       cancel_url: `${process.env.CLIENT_URL}`,
     });
     res.json({ url: session.url });
