@@ -12,10 +12,10 @@ const authController = require("../controllers/authController");
 
 router
   .route("/")
-  .post(authController.restrictTo("learner"), createEnrollment)
+  .post(createEnrollment)
   .get(authController.restrictTo("admin", "instructor"), getAllEnrollments);
 router
-  .route("/:id")
+  .route("/:id/userId")
   .get(getEnrollmentById)
   .patch(authController.restrictTo("learner"), updateEnrollmentById)
   .delete(authController.restrictTo("learner"), deleteEnrollmentById);

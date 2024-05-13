@@ -5,10 +5,9 @@ const AppError = require("../utils/AppError");
 
 // Create a new enrollment
 const createEnrollment = catchAsync(async (req, res, next) => {
-  const { courseId } = req.body;
-  const learnerId = req.user.userId;
+  const { courseId, userId } = req.body;
 
-  const existingEnrollment = await Enrollment.findOne({ courseId, learnerId });
+  const existingEnrollment = await Enrollment.findOne({ courseId, userId });
   if (existingEnrollment) {
     return next(new AppError("Already enrolled!", 400));
   }
@@ -21,7 +20,8 @@ const createEnrollment = catchAsync(async (req, res, next) => {
   const newEnrollment = new Enrollment({
     courseId,
     instructorId: course.createdBy,
-    learnerId,
+    learnerId: userId,
+    paymentStatus: true,
   });
 
   const savedEnrollment = await newEnrollment.save();
@@ -63,7 +63,7 @@ const getEnrollmentById = catchAsync(async (req, res, next) => {
 
 // Update an enrollment by ID
 const updateEnrollmentById = catchAsync(async (req, res, next) => {
-  const userId = req.user.userId;
+  const userId = req.params.userId;
   const courseId = req.params.id;
   const enrollment = await Enrollment.findOne({
     courseId: courseId,
