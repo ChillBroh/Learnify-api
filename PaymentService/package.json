@@ -16,6 +16,7 @@
     "express": "^4.19.2",
     "http": "^0.0.1-security",
     "mongodb": "^6.6.1",
-    "mongoose": "^8.3.4"
+    "mongoose": "^8.3.4",
+    "stripe": "^15.6.0"
   }
 }
