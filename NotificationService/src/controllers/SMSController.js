@@ -10,7 +10,7 @@ const SMSController = async (req, res) => {
     let receiver = req.body.receiver;
     const msg = req.body.message;
 
-    // Validate receiver phone number format
+    // Validate format of the receiver phone number 
     if (!receiver.startsWith('+')) {
       if (receiver.length === 10 && receiver.startsWith('0')) {
         // Remove the leading '0' and add '+94' instead
