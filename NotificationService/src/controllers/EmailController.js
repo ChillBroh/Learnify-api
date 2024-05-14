@@ -1,3 +1,4 @@
+// Manages email handling features
 const nodeMail = require("nodemailer");
 
 const EmailController = async (req, res) => {
