@@ -7,32 +7,40 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 //host.docker.internal
-app.use("/api/auth", applyRateLimiter, proxy("http://localhost:8001"));
+app.use("/api/auth", applyRateLimiter, proxy("host.docker.internal:8001"));
 app.use(
   "/api/course",
   applyRateLimiter,
   authenticateRequest,
-  proxy("http://localhost:8002")
+  proxy("host.docker.internal:8002")
 );
-app.use("/api/guest/course", applyRateLimiter, proxy("http://localhost:8002"));
+app.use(
+  "/api/guest/course",
+  applyRateLimiter,
+  proxy("host.docker.internal:8002")
+);
 app.use(
   "/api/learner",
   applyRateLimiter,
   authenticateRequest,
-  proxy("http://localhost:8003")
+  proxy("host.docker.internal:8003")
 );
-app.use("/api/notification", applyRateLimiter, proxy("http://localhost:8004"));
+app.use(
+  "/api/notification",
+  applyRateLimiter,
+  proxy("host.docker.internal:8004")
+);
 app.use(
   "/api/payment",
   applyRateLimiter,
   authenticateRequest,
-  proxy("http://localhost:8005")
+  proxy("host.docker.internal:8005")
 );
 app.use(
   "/api/user",
   applyRateLimiter,
   authenticateRequest,
-  proxy("http://localhost:8006")
+  proxy("host.docker.internal:8006")
 );
 
 //Exporting app to be used by the server.js

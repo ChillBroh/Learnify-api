@@ -7,7 +7,7 @@ const axios = require("axios");
 // Create a new enrollment
 const createEnrollment = catchAsync(async (req, res, next) => {
   const { courseId, userId } = req.body;
-
+  console.log("hello");
   const existingEnrollment = await Enrollment.findOne({
     courseId: courseId,
     learnerId: userId,
@@ -31,10 +31,10 @@ const createEnrollment = catchAsync(async (req, res, next) => {
   const savedEnrollment = await newEnrollment.save();
   if (savedEnrollment) {
     const userResponse = await axios.get(
-      `http://localhost:8006/common/user/${userId}`
+      `http://user:8006/common/user/${userId}`
     );
     const email = userResponse.data.email;
-    const response = await axios.post("http://localhost:8004/send-email", {
+    const response = await axios.post("http://notification:8004/send-email", {
       email: email,
       subject: `Course Enrollment - ${course.title}`,
       text: `Congratulations! You have successfully Enrolled to ${course.title}! You will received a payment Confirmation Message shortly.`,
