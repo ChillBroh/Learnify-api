@@ -1,4 +1,6 @@
+// Controls the payment flow
 const Stripe = require("stripe");
+// Load required keys
 const stripe = Stripe(process.env.STRIPE_KEY);
 const axios = require("axios");
 const express = require("express");
@@ -43,7 +45,7 @@ const WebhookEvent = async (req, res) => {
   const payload = req.body;
 
   try {
-    // Verify the event by fetching it from Stripe
+    // Verify the event by fetching it from Stripe gateway
     const event = await stripe.webhooks.constructEvent(
       req.rawBody, // You can use rawBody if using express-rawbody middleware
       req.headers["stripe-signature"],
@@ -54,7 +56,7 @@ const WebhookEvent = async (req, res) => {
     switch (event.type) {
       case "checkout.session.completed":
         const session = event.data.object;
-        // Do something with the session data (e.g., save payment details to your database)
+        // Perform actions with the session data (e.g., save payment details to your database)
         console.log("Payment successful:", session);
         break;
       default:

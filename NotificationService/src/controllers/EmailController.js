@@ -1,3 +1,4 @@
+// Manages email handling features
 const nodeMail = require("nodemailer");
 
 const EmailController = async (req, res) => {
@@ -25,6 +26,7 @@ const EmailController = async (req, res) => {
       message: "Email Sent Successfully",
     });
   } catch (error) {
+    // handle errors
     console.log("Email Not Sent");
     console.log(error);
   }
