@@ -8,7 +8,10 @@ const axios = require("axios");
 const createEnrollment = catchAsync(async (req, res, next) => {
   const { courseId, userId } = req.body;
 
-  const existingEnrollment = await Enrollment.findOne({ courseId, userId });
+  const existingEnrollment = await Enrollment.findOne({
+    courseId: courseId,
+    learnerId: userId,
+  });
   if (existingEnrollment) {
     return next(new AppError("Already enrolled!", 400));
   }
