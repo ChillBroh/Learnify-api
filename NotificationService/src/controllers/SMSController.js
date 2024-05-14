@@ -1,3 +1,4 @@
+// Manages sms handling features
 const axios = require('axios');
 
 const SMSController = async (req, res) => {
