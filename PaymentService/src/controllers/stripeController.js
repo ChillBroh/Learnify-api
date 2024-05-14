@@ -45,7 +45,7 @@ const WebhookEvent = async (req, res) => {
   const payload = req.body;
 
   try {
-    // Verify the event by fetching it from Stripe
+    // Verify the event by fetching it from Stripe gateway
     const event = await stripe.webhooks.constructEvent(
       req.rawBody, // You can use rawBody if using express-rawbody middleware
       req.headers["stripe-signature"],
