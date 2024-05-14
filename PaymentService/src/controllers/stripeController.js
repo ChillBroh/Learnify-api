@@ -1,5 +1,6 @@
 // Controls the payment flow
 const Stripe = require("stripe");
+// Load required keys
 const stripe = Stripe(process.env.STRIPE_KEY);
 const axios = require("axios");
 const express = require("express");
