@@ -1,3 +1,4 @@
+// Controls the payment flow
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_KEY);
 const axios = require("axios");
