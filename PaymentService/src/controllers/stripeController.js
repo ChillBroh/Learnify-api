@@ -56,7 +56,7 @@ const WebhookEvent = async (req, res) => {
     switch (event.type) {
       case "checkout.session.completed":
         const session = event.data.object;
-        // Do something with the session data (e.g., save payment details to your database)
+        // Perform actions with the session data (e.g., save payment details to your database)
         console.log("Payment successful:", session);
         break;
       default:
