@@ -39,6 +39,11 @@ const createEnrollment = catchAsync(async (req, res, next) => {
       subject: `Course Enrollment - ${course.title}`,
       text: `Congratulations! You have successfully Enrolled to ${course.title}! You will received a payment Confirmation Message shortly.`,
     });
+    console.log(userResponse.data.mobileNo);
+    const responseSMS = await axios.post("http://notification:8004/send-sms", {
+      receiver: userResponse.data.mobileNo,
+      message: "Congratulations! Your payment is successfull!",
+    });
   }
 
   res.status(201).json({

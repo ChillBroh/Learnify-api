@@ -28,7 +28,6 @@ const CreateCheckout = async (req, res) => {
       success_url: `${process.env.CLIENT_URL}course/${req.body.id}`,
       cancel_url: `${process.env.CLIENT_URL}`,
     });
-    console.log("hello1");
     const response = await axios.post(`http://course:8002/enroll/`, {
       courseId: req.body.id,
       userId: req.body.userId,
