@@ -77,7 +77,7 @@ const getEnrollmentById = catchAsync(async (req, res, next) => {
   });
 });
 
-// Update an enrollment by ID
+// Update an enrollment by id
 const updateEnrollmentById = catchAsync(async (req, res, next) => {
   const userId = req.params.userId;
   const courseId = req.params.id;
