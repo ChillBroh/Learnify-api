@@ -4,7 +4,7 @@
 
 const mongoose = require("mongoose");
 
-// Schema for courses
+// Schema for Courses
 const enrollmentSchema = new mongoose.Schema(
   {
     courseId: {
